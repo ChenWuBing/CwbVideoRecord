@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CwbVideoRecordVC" customModule="CwbVideoRecord" customModuleProvider="target">
+            <connections>
+                <outlet property="CloseButton" destination="TU6-sh-K1b" id="8TM-QZ-sJZ"/>
+                <outlet property="SwitchButton" destination="gP3-sz-GGS" id="2J0-kz-omz"/>
+                <outlet property="botView" destination="gjY-1M-crQ" id="yRs-Nh-nAc"/>
+                <outlet property="lightButton" destination="AcE-Nx-ktw" id="fm4-xA-rv8"/>
+                <outlet property="picButton" destination="Oco-cw-wgM" id="1mm-z7-hzK"/>
+                <outlet property="videoButton" destination="qNd-22-vOX" id="5G5-7J-i4q"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjV-9Q-vVh">
+                    <rect key="frame" x="162.5" y="577" width="50" height="50"/>
+                    <state key="normal" image="video_startRecord"/>
+                    <connections>
+                        <action selector="StartRecordAction:" destination="-1" eventType="touchUpInside" id="l5W-hW-uc8"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjY-1M-crQ">
+                    <rect key="frame" x="137.5" y="642" width="100" height="25"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNd-22-vOX">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="25"/>
+                            <state key="normal" title="视频">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="videoButtonAction:" destination="-1" eventType="touchUpInside" id="MTG-7U-iAR"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oco-cw-wgM">
+                            <rect key="frame" x="50" y="0.0" width="50" height="25"/>
+                            <state key="normal" title="照片">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="picButtonActoin:" destination="-1" eventType="touchUpInside" id="Q4j-ZG-Y2m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Oco-cw-wgM" secondAttribute="bottom" id="2Oh-Jg-p56"/>
+                        <constraint firstItem="qNd-22-vOX" firstAttribute="top" secondItem="gjY-1M-crQ" secondAttribute="top" id="4nH-9I-dh7"/>
+                        <constraint firstItem="Oco-cw-wgM" firstAttribute="leading" secondItem="qNd-22-vOX" secondAttribute="trailing" id="4t5-XL-pyU"/>
+                        <constraint firstItem="Oco-cw-wgM" firstAttribute="top" secondItem="gjY-1M-crQ" secondAttribute="top" id="71b-Tr-L3o"/>
+                        <constraint firstItem="qNd-22-vOX" firstAttribute="leading" secondItem="gjY-1M-crQ" secondAttribute="leading" id="ANO-ca-C3I"/>
+                        <constraint firstAttribute="bottom" secondItem="qNd-22-vOX" secondAttribute="bottom" id="DUc-7u-Oyj"/>
+                        <constraint firstItem="Oco-cw-wgM" firstAttribute="width" secondItem="qNd-22-vOX" secondAttribute="width" id="beg-wh-y9x"/>
+                        <constraint firstAttribute="width" constant="100" id="f90-aa-HOa"/>
+                        <constraint firstAttribute="trailing" secondItem="Oco-cw-wgM" secondAttribute="trailing" id="f9O-6K-CdA"/>
+                        <constraint firstAttribute="height" constant="25" id="wcG-69-jif"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gP3-sz-GGS">
+                    <rect key="frame" x="264" y="584.5" width="35" height="35"/>
+                    <state key="normal" image="video_switch"/>
+                    <connections>
+                        <action selector="SwitchButtonAction:" destination="-1" eventType="touchUpInside" id="0zE-z5-adg"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TU6-sh-K1b">
+                    <rect key="frame" x="76.5" y="584.5" width="35" height="35"/>
+                    <state key="normal" image="video_close"/>
+                    <connections>
+                        <action selector="CloseButtonAction:" destination="-1" eventType="touchUpInside" id="O3S-K3-vjX"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AcE-Nx-ktw">
+                    <rect key="frame" x="175.5" y="533" width="24" height="24"/>
+                    <state key="normal" image="video_closeLight"/>
+                    <connections>
+                        <action selector="lightButtonAction:" destination="-1" eventType="touchUpInside" id="MLo-0f-Ozw"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="gjY-1M-crQ" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="0QX-lv-Fop"/>
+                <constraint firstItem="gP3-sz-GGS" firstAttribute="centerY" secondItem="fjV-9Q-vVh" secondAttribute="centerY" id="8Qs-NU-83l"/>
+                <constraint firstItem="gP3-sz-GGS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="1.5" id="BCR-NA-gGh"/>
+                <constraint firstItem="fjV-9Q-vVh" firstAttribute="top" secondItem="AcE-Nx-ktw" secondAttribute="bottom" constant="20" id="IMX-LQ-0n3"/>
+                <constraint firstItem="gjY-1M-crQ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="K0w-qN-8t3"/>
+                <constraint firstItem="TU6-sh-K1b" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" multiplier="0.5" id="VPC-tP-uva"/>
+                <constraint firstItem="AcE-Nx-ktw" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="WYg-Jn-L8J"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fjV-9Q-vVh" secondAttribute="bottom" constant="40" id="brP-Rv-krP"/>
+                <constraint firstItem="fjV-9Q-vVh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="e1k-SC-dgN"/>
+                <constraint firstItem="fjV-9Q-vVh" firstAttribute="centerY" secondItem="TU6-sh-K1b" secondAttribute="centerY" id="g6I-iY-wtR"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="39.200000000000003" y="46.326836581709152"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="video_close" width="35" height="35"/>
+        <image name="video_closeLight" width="24" height="24"/>
+        <image name="video_startRecord" width="50" height="50"/>
+        <image name="video_switch" width="35" height="35"/>
+    </resources>
+</document>
