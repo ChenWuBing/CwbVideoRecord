@@ -12,6 +12,11 @@
 		48DD921C21EF44B000F330C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48DD921A21EF44B000F330C5 /* Main.storyboard */; };
 		48DD921E21EF44B100F330C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48DD921D21EF44B100F330C5 /* Assets.xcassets */; };
 		48DD922121EF44B100F330C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48DD921F21EF44B100F330C5 /* LaunchScreen.storyboard */; };
+		48DD922F21EF44D400F330C5 /* CWBAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD922921EF44D400F330C5 /* CWBAlertView.swift */; };
+		48DD923021EF44D400F330C5 /* CwbVideoRecordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48DD922C21EF44D400F330C5 /* CwbVideoRecordVC.xib */; };
+		48DD923121EF44D400F330C5 /* CwbVideoRecordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD922D21EF44D400F330C5 /* CwbVideoRecordVC.swift */; };
+		48DD923221EF44D400F330C5 /* PrivacyPermission.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DD922E21EF44D400F330C5 /* PrivacyPermission.m */; };
+		4E10E1BCD35D43FD4FF75003 /* Pods_CwbVideoRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC45CC8D3CDDF10BBD08079F /* Pods_CwbVideoRecord.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,15 @@
 		48DD921D21EF44B100F330C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48DD922021EF44B100F330C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		48DD922221EF44B100F330C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48DD922921EF44D400F330C5 /* CWBAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CWBAlertView.swift; sourceTree = "<group>"; };
+		48DD922A21EF44D400F330C5 /* CwbVideoRecord-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CwbVideoRecord-Bridging-Header.h"; sourceTree = "<group>"; };
+		48DD922B21EF44D400F330C5 /* PrivacyPermission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivacyPermission.h; sourceTree = "<group>"; };
+		48DD922C21EF44D400F330C5 /* CwbVideoRecordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CwbVideoRecordVC.xib; sourceTree = "<group>"; };
+		48DD922D21EF44D400F330C5 /* CwbVideoRecordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwbVideoRecordVC.swift; sourceTree = "<group>"; };
+		48DD922E21EF44D400F330C5 /* PrivacyPermission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivacyPermission.m; sourceTree = "<group>"; };
+		597C01D34FAE19F79AA4E016 /* Pods-CwbVideoRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CwbVideoRecord.release.xcconfig"; path = "Pods/Target Support Files/Pods-CwbVideoRecord/Pods-CwbVideoRecord.release.xcconfig"; sourceTree = "<group>"; };
+		BDD82079FD999CE7C5189934 /* Pods-CwbVideoRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CwbVideoRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CwbVideoRecord/Pods-CwbVideoRecord.debug.xcconfig"; sourceTree = "<group>"; };
+		DC45CC8D3CDDF10BBD08079F /* Pods_CwbVideoRecord.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CwbVideoRecord.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E10E1BCD35D43FD4FF75003 /* Pods_CwbVideoRecord.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		061465E830BA85B1996AD408 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC45CC8D3CDDF10BBD08079F /* Pods_CwbVideoRecord.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4358EE9877CFF82B5E45F0EE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BDD82079FD999CE7C5189934 /* Pods-CwbVideoRecord.debug.xcconfig */,
+				597C01D34FAE19F79AA4E016 /* Pods-CwbVideoRecord.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		48DD920A21EF44B000F330C5 = {
 			isa = PBXGroup;
 			children = (
 				48DD921521EF44B000F330C5 /* CwbVideoRecord */,
 				48DD921421EF44B000F330C5 /* Products */,
+				4358EE9877CFF82B5E45F0EE /* Pods */,
+				061465E830BA85B1996AD408 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +88,7 @@
 		48DD921521EF44B000F330C5 /* CwbVideoRecord */ = {
 			isa = PBXGroup;
 			children = (
+				48DD922821EF44D400F330C5 /* 相机 */,
 				48DD921621EF44B000F330C5 /* AppDelegate.swift */,
 				48DD921821EF44B000F330C5 /* ViewController.swift */,
 				48DD921A21EF44B000F330C5 /* Main.storyboard */,
@@ -64,6 +99,19 @@
 			path = CwbVideoRecord;
 			sourceTree = "<group>";
 		};
+		48DD922821EF44D400F330C5 /* 相机 */ = {
+			isa = PBXGroup;
+			children = (
+				48DD922921EF44D400F330C5 /* CWBAlertView.swift */,
+				48DD922A21EF44D400F330C5 /* CwbVideoRecord-Bridging-Header.h */,
+				48DD922C21EF44D400F330C5 /* CwbVideoRecordVC.xib */,
+				48DD922D21EF44D400F330C5 /* CwbVideoRecordVC.swift */,
+				48DD922B21EF44D400F330C5 /* PrivacyPermission.h */,
+				48DD922E21EF44D400F330C5 /* PrivacyPermission.m */,
+			);
+			path = "相机";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +119,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48DD922521EF44B100F330C5 /* Build configuration list for PBXNativeTarget "CwbVideoRecord" */;
 			buildPhases = (
+				6A24FD5E27103E2F17CFEF1C /* [CP] Check Pods Manifest.lock */,
 				48DD920F21EF44B000F330C5 /* Sources */,
 				48DD921021EF44B000F330C5 /* Frameworks */,
 				48DD921121EF44B000F330C5 /* Resources */,
+				9572C7CBDBBBA66171D54419 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48DD923021EF44D400F330C5 /* CwbVideoRecordVC.xib in Resources */,
 				48DD922121EF44B100F330C5 /* LaunchScreen.storyboard in Resources */,
 				48DD921E21EF44B100F330C5 /* Assets.xcassets in Resources */,
 				48DD921C21EF44B000F330C5 /* Main.storyboard in Resources */,
@@ -130,12 +181,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6A24FD5E27103E2F17CFEF1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CwbVideoRecord-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9572C7CBDBBBA66171D54419 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CwbVideoRecord/Pods-CwbVideoRecord-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GPUImage/GPUImage.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GPUImage.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CwbVideoRecord/Pods-CwbVideoRecord-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		48DD920F21EF44B000F330C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48DD923121EF44D400F330C5 /* CwbVideoRecordVC.swift in Sources */,
+				48DD922F21EF44D400F330C5 /* CWBAlertView.swift in Sources */,
 				48DD921921EF44B000F330C5 /* ViewController.swift in Sources */,
+				48DD923221EF44D400F330C5 /* PrivacyPermission.m in Sources */,
 				48DD921721EF44B000F330C5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,37 +381,43 @@
 		};
 		48DD922621EF44B100F330C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDD82079FD999CE7C5189934 /* Pods-CwbVideoRecord.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PH92H2QS8W;
 				INFOPLIST_FILE = CwbVideoRecord/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TheGiant.www.CwbVideoRecord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/wubing/Desktop/苹果App/相机/CwbVideoRecord/CwbVideoRecord/相机/CwbVideoRecord-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		48DD922721EF44B100F330C5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 597C01D34FAE19F79AA4E016 /* Pods-CwbVideoRecord.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PH92H2QS8W;
 				INFOPLIST_FILE = CwbVideoRecord/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TheGiant.www.CwbVideoRecord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/wubing/Desktop/苹果App/相机/CwbVideoRecord/CwbVideoRecord/相机/CwbVideoRecord-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
