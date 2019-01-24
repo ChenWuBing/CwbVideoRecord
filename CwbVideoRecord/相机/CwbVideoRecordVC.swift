@@ -13,8 +13,6 @@
 
  */
 
-
-
 import UIKit
 import GPUImage
 import AssetsLibrary
@@ -46,6 +44,8 @@ class CwbVideoRecordVC: UIViewController{
     fileprivate var beginGestureScale:CGFloat = 1.0
     ///最后的缩放比例
     fileprivate var effectiveScale:CGFloat = 1.0
+    ///最大放大倍数
+    fileprivate let maxScaleAndCropFactor:CGFloat = 5.0
     ///是否打开闪光灯
     fileprivate var isOpenLight = false
     ///是否开始录制
@@ -330,10 +330,9 @@ class CwbVideoRecordVC: UIViewController{
         if self.effectiveScale < 1.0 {
             self.effectiveScale = 1.0
         }
-        ///设置最大放大倍数
-        let maxScaleAndCropFactor:CGFloat = 3.0
-        if self.effectiveScale > maxScaleAndCropFactor {
-            self.effectiveScale = maxScaleAndCropFactor
+        
+        if self.effectiveScale > self.maxScaleAndCropFactor {
+            self.effectiveScale = self.maxScaleAndCropFactor
         }
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.025)
