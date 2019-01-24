@@ -3,10 +3,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var imgView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.privacyPermission(type: PrivacyPermissionType.camera)
     }
     
     @IBAction func buttonAction(_ sender: UIButton) {
