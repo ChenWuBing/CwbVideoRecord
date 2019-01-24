@@ -29,15 +29,14 @@ class CwbVideoRecordVC: UIViewController{
     @IBOutlet weak var startRecordButton: UIButton!
     ///水印背景框
     @IBOutlet weak var waterView: UIView!
-    
     ///视频拍摄
     fileprivate var MyCamera:GPUImageStillCamera?
     ///取景框
     fileprivate var myGPUImageView:GPUImageView?
     ///滤镜文件
     fileprivate var filter:GPUImageFilter?
-    ///滤镜
-    fileprivate var ljFilter:GPUImageOutput?
+    ///美颜滤镜
+    fileprivate var beautifyFilter:GPUImageBeautifyFilter?
     ///视频输出
     fileprivate var movieWriter:GPUImageMovieWriter?
     ///开始的缩放比例
@@ -62,8 +61,6 @@ class CwbVideoRecordVC: UIViewController{
     fileprivate var videoTime = 0
     ///路是时间计时器
     fileprivate var Timer:Timer?
-    ///水印图片数组
-    fileprivate var cameraImgArr = [UIImage]()
     ///视频URL地址
     fileprivate lazy var videoUrl:URL = {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -83,7 +80,6 @@ class CwbVideoRecordVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.waterView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        self.cameraImgArr = [UIImage.init(named: "video_startRecord")!,UIImage.init(named: "video_force_Img")!]
         self.videoButton.setTitleColor(UIColor.white, for: .normal)
         self.timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 30))
         self.timeLabel?.textColor = UIColor.white
@@ -115,7 +111,7 @@ class CwbVideoRecordVC: UIViewController{
         self.MyCamera = GPUImageStillCamera.init(sessionPreset: AVCaptureSession.Preset.hd1280x720.rawValue, cameraPosition: device)
         self.MyCamera?.outputImageOrientation = .portrait
         self.MyCamera?.horizontallyMirrorRearFacingCamera = false
-        self.MyCamera?.horizontallyMirrorFrontFacingCamera = false
+        self.MyCamera?.horizontallyMirrorFrontFacingCamera = true
         
         //该句可防止允许声音通过的情况下，避免录制第一帧黑屏闪屏
         self.MyCamera?.addAudioInputsAndOutputs()
@@ -136,6 +132,11 @@ class CwbVideoRecordVC: UIViewController{
         self.pictureFile?.addTarget(self.filter!)
         self.pictureFile?.useNextFrameForImageCapture()
         self.pictureFile?.processImage()
+        
+        ///设置美颜滤镜
+        self.beautifyFilter = GPUImageBeautifyFilter.init()
+        self.MyCamera?.addTarget(self.beautifyFilter!)
+        self.beautifyFilter?.addFilter(self.filter!)
         
         //视频写入文件
         self.movieWriter = GPUImageMovieWriter.init(movieURL: self.videoUrl, size: CGSize.init(width: 920, height: 1680))
@@ -274,6 +275,7 @@ class CwbVideoRecordVC: UIViewController{
     @IBAction func CloseButtonAction(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
+    
     //聚焦事件
     @objc fileprivate func focus(tap:UITapGestureRecognizer){
         //点击位置

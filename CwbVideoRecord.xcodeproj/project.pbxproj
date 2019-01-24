@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		483B236021FA0D3200D66131 /* GPUImageBeautifyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 483B235E21FA0D3100D66131 /* GPUImageBeautifyFilter.m */; };
 		487BEB6421F09302002DE089 /* CameraSource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 487BEB6321F09302002DE089 /* CameraSource.xcassets */; };
 		48DD921721EF44B000F330C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD921621EF44B000F330C5 /* AppDelegate.swift */; };
 		48DD921921EF44B000F330C5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD921821EF44B000F330C5 /* ViewController.swift */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		483B235E21FA0D3100D66131 /* GPUImageBeautifyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautifyFilter.m; sourceTree = "<group>"; };
+		483B235F21FA0D3100D66131 /* GPUImageBeautifyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautifyFilter.h; sourceTree = "<group>"; };
 		487BEB6321F09302002DE089 /* CameraSource.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CameraSource.xcassets; sourceTree = "<group>"; };
 		48DD921321EF44B000F330C5 /* CwbVideoRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CwbVideoRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48DD921621EF44B000F330C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 		48DD922821EF44D400F330C5 /* 相机 */ = {
 			isa = PBXGroup;
 			children = (
+				483B235F21FA0D3100D66131 /* GPUImageBeautifyFilter.h */,
+				483B235E21FA0D3100D66131 /* GPUImageBeautifyFilter.m */,
 				48DD922921EF44D400F330C5 /* CWBAlertView.swift */,
 				48DD922A21EF44D400F330C5 /* CwbVideoRecord-Bridging-Header.h */,
 				48DD922D21EF44D400F330C5 /* CwbVideoRecordVC.swift */,
@@ -240,6 +245,7 @@
 				48DD923121EF44D400F330C5 /* CwbVideoRecordVC.swift in Sources */,
 				48DD922F21EF44D400F330C5 /* CWBAlertView.swift in Sources */,
 				48DD921921EF44B000F330C5 /* ViewController.swift in Sources */,
+				483B236021FA0D3200D66131 /* GPUImageBeautifyFilter.m in Sources */,
 				48DD923221EF44D400F330C5 /* PrivacyPermission.m in Sources */,
 				48DD921721EF44B000F330C5 /* AppDelegate.swift in Sources */,
 			);

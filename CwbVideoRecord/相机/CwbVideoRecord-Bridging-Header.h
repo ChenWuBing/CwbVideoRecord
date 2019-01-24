@@ -4,5 +4,6 @@
 
 ///权限检测
 #import "PrivacyPermission.h"
-
+///美颜文件
+#import "GPUImageBeautifyFilter.h"
 #endif /* CwbVideoRecord_h */
