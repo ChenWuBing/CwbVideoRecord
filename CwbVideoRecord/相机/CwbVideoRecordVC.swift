@@ -131,7 +131,7 @@ class CwbVideoRecordVC: UIViewController{
         //滤镜文件设置
         self.filter = GPUImageMultiplyBlendFilter.init()
         self.MyCamera?.addTarget(self.filter!)
-        ///水印纹理
+        //MARK:水印纹理设置
         self.pictureFile = GPUImagePicture.init(image: self.screenSnapshot(view: self.waterView)!)
         self.pictureFile?.addTarget(self.filter!)
         self.pictureFile?.useNextFrameForImageCapture()
@@ -371,7 +371,7 @@ extension CwbVideoRecordVC:GPUImageVideoCameraDelegate{
         if isCamera {
             DispatchQueue.main.async {
                 let image = self.screenSnapshot(view: self.waterView)
-                ///水印纹理重制
+                //MARK:水印纹理重制
                 ///防止崩溃
                 self.pictureFile?.removeAllTargets()
                 self.pictureFile?.removeFramebuffer()
