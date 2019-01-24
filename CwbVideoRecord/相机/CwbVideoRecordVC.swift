@@ -169,6 +169,7 @@ class CwbVideoRecordVC: UIViewController{
                 let dateF = DateFormatter.init()
                 dateF.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 self.timeLabel?.text = dateF.string(from: Date())
+                self.setPicFilter()
                 self.Timer = WeakTimerObject.scheduledTimerWithTimeInterval(interval: 1, aTargat: self, aSelector: #selector(timerAction), userInfo: nil, repeats: true)
                 self.startRecordButton.setTitle("0", for: .normal)
                 self.movieWriter?.startRecording()
@@ -246,6 +247,10 @@ class CwbVideoRecordVC: UIViewController{
     @IBAction func SwitchButtonAction(_ sender: UIButton) {
         isFontCamera = !isFontCamera
         self.lightButton.isHidden = self.isFontCamera
+        if self.isFontCamera {
+            self.isOpenLight = false
+            self.lightButton.setImage(UIImage.init(named: "video_closeLight"), for: .normal)
+        }
         self.MyCamera?.stopCapture()
         self.MyCamera?.removeTarget(self.myGPUImageView!)
         self.myGPUImageView?.removeFromSuperview()
@@ -371,17 +376,20 @@ extension CwbVideoRecordVC:UIGestureRecognizerDelegate{
 extension CwbVideoRecordVC:GPUImageVideoCameraDelegate{
     func willOutputSampleBuffer(_ sampleBuffer: CMSampleBuffer!) {
         if isCamera {
-            DispatchQueue.main.async {
-                let image = self.screenSnapshot(view: self.waterView)
-                //MARK:水印纹理重制
-                ///防止崩溃
-                self.pictureFile?.removeAllTargets()
-                self.pictureFile?.removeFramebuffer()
-                self.pictureFile = GPUImagePicture.init(image: image)
-                self.pictureFile?.addTarget(self.filter!)
-                self.pictureFile?.useNextFrameForImageCapture()
-                self.pictureFile?.processImage()
-            }
+            self.setPicFilter()
+        }
+    }
+    fileprivate func setPicFilter(){
+        DispatchQueue.main.async {
+            let image = self.screenSnapshot(view: self.waterView)
+            //MARK:水印纹理重制
+            ///防止崩溃
+            self.pictureFile?.removeAllTargets()
+            self.pictureFile?.removeFramebuffer()
+            self.pictureFile = GPUImagePicture.init(image: image)
+            self.pictureFile?.addTarget(self.filter!)
+            self.pictureFile?.useNextFrameForImageCapture()
+            self.pictureFile?.processImage()
         }
     }
 }
