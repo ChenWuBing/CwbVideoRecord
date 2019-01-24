@@ -82,7 +82,7 @@ class CwbVideoRecordVC: UIViewController{
         self.waterView.backgroundColor = UIColor.white.withAlphaComponent(0)
         self.videoButton.setTitleColor(UIColor.white, for: .normal)
         self.timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 30))
-        self.timeLabel?.textColor = UIColor.white
+        self.timeLabel?.textColor = UIColor.red
         self.timeLabel?.font = UIFont.systemFont(ofSize: 15)
         self.timeLabel?.textAlignment = .center
         self.waterView.addSubview(self.timeLabel!)
@@ -245,6 +245,7 @@ class CwbVideoRecordVC: UIViewController{
     //相机反转
     @IBAction func SwitchButtonAction(_ sender: UIButton) {
         isFontCamera = !isFontCamera
+        self.lightButton.isHidden = self.isFontCamera
         self.MyCamera?.stopCapture()
         self.MyCamera?.removeTarget(self.myGPUImageView!)
         self.myGPUImageView?.removeFromSuperview()
@@ -406,6 +407,8 @@ extension CwbVideoRecordVC {
             }
             if videoUrl != nil {
                 DispatchQueue.main.async {
+                    self.isOpenLight = false
+                    self.lightButton.setImage(UIImage.init(named: "video_closeLight"), for: .normal)
                     try? FileManager.default.removeItem(at: self.videoUrl)
                     self.MyCamera?.stopCapture()
                     self.MyCamera?.removeTarget(self.myGPUImageView!)
