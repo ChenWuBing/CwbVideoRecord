@@ -12,6 +12,7 @@ class CwbVideoRecordVC: UIViewController{
     @IBOutlet weak var SwitchButton: UIButton!
     @IBOutlet weak var CloseButton: UIButton!
     @IBOutlet weak var lightButton: UIButton!
+    @IBOutlet weak var startRecordButton: UIButton!
     
     ///视频拍摄
     fileprivate var MyCamera:GPUImageStillCamera?
@@ -37,8 +38,12 @@ class CwbVideoRecordVC: UIViewController{
     fileprivate var isTakeVideo = true
     ///录制计时器
     fileprivate var videoTimer:Timer?
-    ///视频最长时间
+    ///视频最长时间(s)
     fileprivate var videoMaxTime = 10
+    ///视频录制时间(s)
+    fileprivate var videoTime = 0
+    ///路是时间计时器
+    fileprivate var Timer:Timer?
     ///水印图片数组
     fileprivate var cameraImgArr = [UIImage]()
     ///视频URL地址
@@ -98,13 +103,11 @@ class CwbVideoRecordVC: UIViewController{
         self.filter = GPUImageFilter.init()
         
         ///创建水印内容
-//        let timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 100, width: UIScreen.main.bounds.size.width, height: 40))
-//        let dateFor = DateFormatter.init()
-//        dateFor.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        timeLabel.text = dateFor.string(from: Date())
-//        timeLabel.textColor = UIColor.red
-        
-        
+        //        let timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 100, width: UIScreen.main.bounds.size.width, height: 40))
+        //        let dateFor = DateFormatter.init()
+        //        dateFor.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        timeLabel.text = dateFor.string(from: Date())
+        //        timeLabel.textColor = UIColor.red
         
         self.MyCamera?.addTarget(self.filter!)
         //视频写入文件
@@ -119,6 +122,8 @@ class CwbVideoRecordVC: UIViewController{
         
     }
     deinit {
+        self.Timer?.invalidate()
+        self.Timer = nil
         print("销毁 - 定制相机")
     }
     
@@ -127,15 +132,20 @@ class CwbVideoRecordVC: UIViewController{
         if self.isTakeVideo {
             ///开始录制
             if !self.isCamera {
+                self.Timer = WeakTimerObject.scheduledTimerWithTimeInterval(interval: 1, aTargat: self, aSelector: #selector(timerAction), userInfo: nil, repeats: true)
+                self.startRecordButton.setTitle("0", for: .normal)
                 self.movieWriter?.startRecording()
                 self.isCamera = true
-                sender.setImage(UIImage.init(named: "video_endRecord"), for: .normal)
+                sender.setBackgroundImage(UIImage.init(named: "video_endRecord"), for: .normal)
             }
             else{
                 self.movieWriter?.finishRecording()
                 self.isCamera = false
-                sender.setImage(UIImage.init(named: "video_startRecord"), for: .normal)
+                sender.setBackgroundImage(UIImage.init(named: "video_startRecord"), for: .normal)
+                sender.setTitle("", for: .normal)
                 self.saveTo(videoUrl: self.videoUrl, image: nil)
+                self.Timer?.invalidate()
+                self.Timer = nil
                 
             }
             self.CloseButton.isHidden = self.isCamera
@@ -150,6 +160,22 @@ class CwbVideoRecordVC: UIViewController{
                     }
                 }
             })
+        }
+    }
+    ///时间计时器事件
+    @objc fileprivate func timerAction(){
+        self.videoTime += 1
+        self.startRecordButton.setTitle("\(self.videoTime)", for: .normal)
+        if videoMaxTime > 0 && videoTime > videoMaxTime{
+            self.movieWriter?.finishRecording()
+            self.isCamera = false
+            self.startRecordButton.setBackgroundImage(UIImage.init(named: "video_startRecord"), for: .normal)
+            self.startRecordButton.setTitle("", for: .normal)
+            self.saveTo(videoUrl: self.videoUrl, image: nil)
+            self.Timer?.invalidate()
+            self.Timer = nil
+            self.CloseButton.isHidden = self.isCamera
+            self.SwitchButton.isHidden = self.isCamera
         }
     }
     ///视频
@@ -295,7 +321,7 @@ extension CwbVideoRecordVC:UIGestureRecognizerDelegate{
 extension CwbVideoRecordVC:GPUImageVideoCameraDelegate{
     func willOutputSampleBuffer(_ sampleBuffer: CMSampleBuffer!) {
         if isCamera {
-            print(sampleBuffer)
+//            print(sampleBuffer)
         }
     }
 }
@@ -334,5 +360,35 @@ extension CwbVideoRecordVC {
         let action1 = CWBAlertAction.init(title: "确定", style: .cancel, handler: nil)
         alertView.addAction(action1)
         alertView.show()
+    }
+}
+//MARK:计时器解强引用
+class WeakTimerObject: NSObject {
+    weak var targat: AnyObject?
+    var selector: Selector?
+    var timer: Timer?
+    static func scheduledTimerWithTimeInterval(interval: TimeInterval,
+                                               aTargat: AnyObject,
+                                               aSelector: Selector,
+                                               userInfo: AnyObject?,
+                                               repeats: Bool) -> Timer {
+        let weakObject      = WeakTimerObject()
+        weakObject.targat   = aTargat
+        weakObject.selector = aSelector
+        weakObject.timer    = Timer.scheduledTimer(timeInterval: interval,
+                                                   target: weakObject,
+                                                   selector: #selector(fire),
+                                                   userInfo: userInfo,
+                                                   repeats: repeats)
+        return weakObject.timer!
+    }
+    
+    @objc func fire(ti: Timer) {
+        if let _ = targat {
+            targat?.perform(selector)
+            //targat?.perform(selector!, withObject: ti.userInfo)
+        } else {
+            timer?.invalidate()
+        }
     }
 }

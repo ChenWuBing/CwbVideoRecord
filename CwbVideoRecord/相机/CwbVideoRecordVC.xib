@@ -17,6 +17,7 @@
                 <outlet property="botView" destination="gjY-1M-crQ" id="yRs-Nh-nAc"/>
                 <outlet property="lightButton" destination="AcE-Nx-ktw" id="fm4-xA-rv8"/>
                 <outlet property="picButton" destination="Oco-cw-wgM" id="1mm-z7-hzK"/>
+                <outlet property="startRecordButton" destination="fjV-9Q-vVh" id="Yzs-kG-4fA"/>
                 <outlet property="videoButton" destination="qNd-22-vOX" id="5G5-7J-i4q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,9 +29,9 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjV-9Q-vVh">
                     <rect key="frame" x="162.5" y="577" width="50" height="50"/>
-                    <state key="normal" image="video_startRecord"/>
+                    <state key="normal" backgroundImage="video_startRecord"/>
                     <connections>
-                        <action selector="StartRecordAction:" destination="-1" eventType="touchUpInside" id="l5W-hW-uc8"/>
+                        <action selector="StartRecordAction:" destination="-1" eventType="touchUpInside" id="cKy-G9-Wl2"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjY-1M-crQ">
