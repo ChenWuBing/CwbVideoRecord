@@ -1,3 +1,19 @@
+/*
+ 崩溃：Tried to overrelease a framebuffer, did you forget to call -useNextFrameForImageCapture before using -imageFromCurrentFramebuffer?
+ 
+ 是因为 framebufferReferenceCount的值小于0，这里是GPUImage对buffer的缓存处理，简单的解决办法是在
+ 
+ GPUImageFramebuffer.m中unlock方法添加一个判断
+ 
+ if (framebufferReferenceCount <1) {
+ 
+ return;
+ 
+ }
+
+ */
+
+
 
 import UIKit
 import GPUImage
@@ -13,6 +29,8 @@ class CwbVideoRecordVC: UIViewController{
     @IBOutlet weak var CloseButton: UIButton!
     @IBOutlet weak var lightButton: UIButton!
     @IBOutlet weak var startRecordButton: UIButton!
+    ///水印背景框
+    @IBOutlet weak var waterView: UIView!
     
     ///视频拍摄
     fileprivate var MyCamera:GPUImageStillCamera?
@@ -39,7 +57,7 @@ class CwbVideoRecordVC: UIViewController{
     ///录制计时器
     fileprivate var videoTimer:Timer?
     ///视频最长时间(s)
-    fileprivate var videoMaxTime = 10
+    fileprivate var videoMaxTime = 0
     ///视频录制时间(s)
     fileprivate var videoTime = 0
     ///路是时间计时器
@@ -57,11 +75,22 @@ class CwbVideoRecordVC: UIViewController{
     }()
     ///聚焦层
     fileprivate var focusLayer:CALayer?
-    
+    ///纹理图片
+    fileprivate var pictureFile:GPUImagePicture?
+    ///时间水印
+    fileprivate var timeLabel:UILabel?
     //MARK:程序生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.waterView.backgroundColor = UIColor.white.withAlphaComponent(0)
+        self.cameraImgArr = [UIImage.init(named: "video_startRecord")!,UIImage.init(named: "video_force_Img")!]
         self.videoButton.setTitleColor(UIColor.white, for: .normal)
+        self.timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 30))
+        self.timeLabel?.textColor = UIColor.white
+        self.timeLabel?.font = UIFont.systemFont(ofSize: 15)
+        self.timeLabel?.textAlignment = .center
+        self.waterView.addSubview(self.timeLabel!)
+        self.waterView.bringSubviewToFront(self.timeLabel!)
         self.picButton.setTitleColor(UIColor.white.withAlphaComponent(0.6), for: .normal)
         self.botView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         self.botView.layer.masksToBounds = true
@@ -100,16 +129,14 @@ class CwbVideoRecordVC: UIViewController{
         self.view.addSubview(self.myGPUImageView!)
         self.view.sendSubviewToBack(self.myGPUImageView!)
         //滤镜文件设置
-        self.filter = GPUImageFilter.init()
-        
-        ///创建水印内容
-        //        let timeLabel = UILabel.init(frame: CGRect.init(x: 0, y: 100, width: UIScreen.main.bounds.size.width, height: 40))
-        //        let dateFor = DateFormatter.init()
-        //        dateFor.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        //        timeLabel.text = dateFor.string(from: Date())
-        //        timeLabel.textColor = UIColor.red
-        
+        self.filter = GPUImageMultiplyBlendFilter.init()
         self.MyCamera?.addTarget(self.filter!)
+        ///水印纹理
+        self.pictureFile = GPUImagePicture.init(image: self.screenSnapshot(view: self.waterView)!)
+        self.pictureFile?.addTarget(self.filter!)
+        self.pictureFile?.useNextFrameForImageCapture()
+        self.pictureFile?.processImage()
+        
         //视频写入文件
         self.movieWriter = GPUImageMovieWriter.init(movieURL: self.videoUrl, size: CGSize.init(width: 920, height: 1680))
         self.movieWriter?.encodingLiveVideo = true
@@ -126,21 +153,35 @@ class CwbVideoRecordVC: UIViewController{
         self.Timer = nil
         print("销毁 - 定制相机")
     }
-    
+    //MARK:设置水印试图位置
+    func setWaterViewInRect(waterView:UIView,rect:CGRect){
+        let vi = UIView.init(frame: rect)
+        vi.addSubview(waterView)
+        self.waterView.addSubview(vi)
+    }
     ///开始录制
     @IBAction func StartRecordAction(_ sender: UIButton) {
         if self.isTakeVideo {
             ///开始录制
             if !self.isCamera {
+                self.timeLabel?.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+                let dateF = DateFormatter.init()
+                dateF.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                self.timeLabel?.text = dateF.string(from: Date())
                 self.Timer = WeakTimerObject.scheduledTimerWithTimeInterval(interval: 1, aTargat: self, aSelector: #selector(timerAction), userInfo: nil, repeats: true)
                 self.startRecordButton.setTitle("0", for: .normal)
                 self.movieWriter?.startRecording()
                 self.isCamera = true
+                self.botView.isHidden = true
                 sender.setBackgroundImage(UIImage.init(named: "video_endRecord"), for: .normal)
             }
             else{
+                self.videoTime = 0
+                self.timeLabel?.text = ""
+                self.timeLabel?.backgroundColor = UIColor.clear
                 self.movieWriter?.finishRecording()
                 self.isCamera = false
+                self.botView.isHidden = false
                 sender.setBackgroundImage(UIImage.init(named: "video_startRecord"), for: .normal)
                 sender.setTitle("", for: .normal)
                 self.saveTo(videoUrl: self.videoUrl, image: nil)
@@ -164,9 +205,14 @@ class CwbVideoRecordVC: UIViewController{
     }
     ///时间计时器事件
     @objc fileprivate func timerAction(){
+        let dateF = DateFormatter.init()
+        dateF.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        self.timeLabel?.text = dateF.string(from: Date())
         self.videoTime += 1
         self.startRecordButton.setTitle("\(self.videoTime)", for: .normal)
         if videoMaxTime > 0 && videoTime > videoMaxTime{
+            self.timeLabel?.text = ""
+            self.timeLabel?.backgroundColor = UIColor.clear
             self.movieWriter?.finishRecording()
             self.isCamera = false
             self.startRecordButton.setBackgroundImage(UIImage.init(named: "video_startRecord"), for: .normal)
@@ -176,6 +222,7 @@ class CwbVideoRecordVC: UIViewController{
             self.Timer = nil
             self.CloseButton.isHidden = self.isCamera
             self.SwitchButton.isHidden = self.isCamera
+            self.botView.isHidden = false
         }
     }
     ///视频
@@ -202,6 +249,7 @@ class CwbVideoRecordVC: UIViewController{
         self.myGPUImageView?.removeFromSuperview()
         self.filter?.removeTarget(self.movieWriter!)
         self.MyCamera?.removeTarget(self.filter!)
+        self.pictureFile?.removeAllTargets()
         self.beginGestureScale = 1.0
         self.effectiveScale = 1.0
         self.setCamera(device: isFontCamera ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back)
@@ -321,11 +369,21 @@ extension CwbVideoRecordVC:UIGestureRecognizerDelegate{
 extension CwbVideoRecordVC:GPUImageVideoCameraDelegate{
     func willOutputSampleBuffer(_ sampleBuffer: CMSampleBuffer!) {
         if isCamera {
-//            print(sampleBuffer)
+            DispatchQueue.main.async {
+                let image = self.screenSnapshot(view: self.waterView)
+                ///水印纹理重制
+                ///防止崩溃
+                self.pictureFile?.removeAllTargets()
+                self.pictureFile?.removeFramebuffer()
+                self.pictureFile = GPUImagePicture.init(image: image)
+                self.pictureFile?.addTarget(self.filter!)
+                self.pictureFile?.useNextFrameForImageCapture()
+                self.pictureFile?.processImage()
+            }
         }
     }
 }
-
+//MARK:工具方法
 extension CwbVideoRecordVC {
     //MARK:写入相册
     fileprivate func saveTo(videoUrl:URL?,image:UIImage?){
@@ -346,11 +404,18 @@ extension CwbVideoRecordVC {
                 self.showAlert("保存失败")
             }
             if videoUrl != nil {
-                self.MyCamera?.removeTarget(self.movieWriter!)
-                try? FileManager.default.removeItem(at: self.videoUrl)
-                self.movieWriter = GPUImageMovieWriter.init(movieURL: self.videoUrl, size: CGSize.init(width: 920, height: 1680))
-                self.movieWriter?.encodingLiveVideo = true
-                self.MyCamera?.addTarget(self.movieWriter!)
+                DispatchQueue.main.async {
+                    try? FileManager.default.removeItem(at: self.videoUrl)
+                    self.MyCamera?.stopCapture()
+                    self.MyCamera?.removeTarget(self.myGPUImageView!)
+                    self.myGPUImageView?.removeFromSuperview()
+                    self.filter?.removeTarget(self.movieWriter!)
+                    self.MyCamera?.removeTarget(self.filter!)
+                    self.pictureFile?.removeAllTargets()
+                    self.beginGestureScale = 1.0
+                    self.effectiveScale = 1.0
+                    self.setCamera(device: self.isFontCamera ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back)
+                }
             }
         }
     }
@@ -360,6 +425,18 @@ extension CwbVideoRecordVC {
         let action1 = CWBAlertAction.init(title: "确定", style: .cancel, handler: nil)
         alertView.addAction(action1)
         alertView.show()
+    }
+    //MARK:截图
+    fileprivate func screenSnapshot(view: UIView) -> UIImage? {
+        // 用下面这行而不是UIGraphicsBeginImageContext()，因为前者支持Retina
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return image
     }
 }
 //MARK:计时器解强引用
